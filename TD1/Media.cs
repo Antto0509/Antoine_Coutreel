@@ -11,6 +11,7 @@ namespace TD1
         public string Titres;
         public int NumeroRef;
         public int NbExemplairesDispos;
+        public List<string> Emprunts;
 
         // Constructeur
         public Media(string titres, int numeroRef, int nbExemplairesDispos)
@@ -18,6 +19,7 @@ namespace TD1
             Titres = titres;
             NumeroRef = numeroRef;
             NbExemplairesDispos = nbExemplairesDispos;
+            Emprunts = new List<string>();
         }
 
         // Méthode de polymorphisme
@@ -29,23 +31,51 @@ namespace TD1
                 );
         }
 
-        // Surcharge de l'opérateur "+"
-        public static Media operator +(Media media, int nbExemplaires)
+        // Ajouter un Média
+        public void AjouterMedia(int nbExemplaires)
         {
-            media.NbExemplairesDispos += nbExemplaires;
-            return media;
+            NbExemplairesDispos += nbExemplaires;
         }
 
-        // Surcharge de l'opérateur "-"
-        public static Media operator -(Media media, int nbExemplaires)
+        // Retirer un Média
+        public void RetirerMedia(int nbExemplaires)
         {
-            if (media.NbExemplairesDispos < nbExemplaires)
+            if (NbExemplairesDispos < nbExemplaires)
             {
                 throw new Exception("Nombre d'exemplaires disponibles insuffisant");
             }
 
-            media.NbExemplairesDispos -= nbExemplaires;
-            return media;
+            NbExemplairesDispos -= nbExemplaires;
         }
+
+        // Emprunter un Média
+        public void EmprunterMedia(string utilisateur)
+        {
+            if (NbExemplairesDispos == 0)
+            {
+                throw new Exception("Aucun exemplaire disponible pour l'emprunt");
+            }
+
+            NbExemplairesDispos--;
+            Emprunts.Add(utilisateur);
+        }
+
+        // Retourner un Média
+        public void RetournerMedia(string utilisateur)
+        {
+            NbExemplairesDispos++;
+            Emprunts.Remove(utilisateur);
+        }
+
+        // Rechercher un Média par Titre ou Auteur
+        public static List<Media> RechercherMedia(string critere)
+        {
+            List<Media> resultats = new List<Media>();
+            // Effectuer la recherche en fonction du critère
+            // ...
+            return resultats;
+        }
+
+        
     }
 }
